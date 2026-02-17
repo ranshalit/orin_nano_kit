@@ -1,0 +1,88 @@
+#*****************************************************************************
+# Copyright 2022-2023 NVIDIA Corporation. All rights reserved.
+#*****************************************************************************
+
+cmake_minimum_required(VERSION 3.9.6 FATAL_ERROR)
+
+#--------------------------------------------------------------------------------------------------
+# Project setting
+get_filename_component(PROJNAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+SET(PROJNAME vk_${PROJNAME}_KHR)
+project(${PROJNAME} LANGUAGES C CXX)
+message(STATUS "-------------------------------")
+message(STATUS "Processing Project ${PROJNAME}:")
+
+
+#--------------------------------------------------------------------------------------------------
+# C++ target and defines
+set(CMAKE_CXX_STANDARD 17)
+add_executable(${PROJNAME})
+_add_project_definitions(${PROJNAME})
+target_compile_definitions(${PROJNAME} PRIVATE NV_PERF_ENABLE_INSTRUMENTATION)
+
+#--------------------------------------------------------------------------------------------------
+# Source files for this project
+#
+file(GLOB SOURCE_FILES *.cpp *.hpp *.inl *.h *.c)
+file(GLOB EXTRA_COMMON ${TUTO_KHR_DIR}/common/*.*)
+list(APPEND COMMON_SOURCE_FILES ${EXTRA_COMMON})
+include_directories(${TUTO_KHR_DIR}/common)
+
+
+#--------------------------------------------------------------------------------------------------
+# GLSL to SPIR-V custom build
+compile_glsl_directory(
+	SRC "${CMAKE_CURRENT_SOURCE_DIR}/shaders" 
+	DST "${CMAKE_CURRENT_BINARY_DIR}/spv_indirect_scissor"
+	VULKAN_TARGET "vulkan1.2"
+	)
+
+
+#--------------------------------------------------------------------------------------------------
+# Sources
+target_sources(${PROJNAME} PUBLIC ${SOURCE_FILES} ${HEADER_FILES})
+target_sources(${PROJNAME} PUBLIC ${COMMON_SOURCE_FILES})
+target_sources(${PROJNAME} PUBLIC ${PACKAGE_SOURCE_FILES})
+target_sources(${PROJNAME} PUBLIC ${GLSL_SOURCES} ${GLSL_HEADERS})
+
+
+#--------------------------------------------------------------------------------------------------
+# Sub-folders in Visual Studio
+#
+source_group("Common"       FILES ${COMMON_SOURCE_FILES} ${PACKAGE_SOURCE_FILES})
+source_group("Sources"      FILES ${SOURCE_FILES})
+source_group("Headers"      FILES ${HEADER_FILES})
+source_group("Shader_Files" FILES ${GLSL_SOURCES} ${GLSL_HEADERS})
+
+
+#--------------------------------------------------------------------------------------------------
+# Linkage
+#
+target_link_libraries(${PROJNAME}
+    ${PLATFORM_LIBRARIES}
+    shared_sources
+    NvPerf
+    NvPerfUtility
+)
+
+foreach(DEBUGLIB ${LIBRARIES_DEBUG})
+  target_link_libraries(${PROJNAME} debug ${DEBUGLIB})
+endforeach(DEBUGLIB)
+
+foreach(RELEASELIB ${LIBRARIES_OPTIMIZED})
+  target_link_libraries(${PROJNAME} optimized ${RELEASELIB})
+endforeach(RELEASELIB)
+
+#--------------------------------------------------------------------------------------------------
+# copies binaries that need to be put next to the exe files (ZLib, etc.)
+#
+_finalize_target( ${PROJNAME} )
+
+target_copy_to_output_dir(
+  TARGET ${PROJECT_NAME} 
+  DEST_SUBFOLDER "${PROJECT_NAME}/"
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/spv_indirect_scissor
+  )
+
+install(FILES ${SPV_OUTPUT} CONFIGURATIONS Release DESTINATION "bin_${ARCH}/${PROJNAME}/spv_indirect_scissor")
+install(FILES ${SPV_OUTPUT} CONFIGURATIONS Debug DESTINATION "bin_${ARCH}_debug/${PROJNAME}/spv_indirect_scissor")

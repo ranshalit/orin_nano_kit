@@ -1,0 +1,9 @@
+#for now, ignore C code folder
+/C/
+output/
+build/
+# ignore bsp (due to size)
+/bsp/
+#ignore all deb packages.
+/bundles/jetson_bundle
+Linux_for_Tegra/

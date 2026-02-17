@@ -1,0 +1,148 @@
+h1{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color:#2d2d2d;
+    font-weight: normal;
+    text-rendering: optimizelegibility;
+    font-size: 30px;
+    line-height: 40px;
+    margin: 15px 0;
+}
+
+h2{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color:#0a58eb;
+    font-weight: normal;
+    text-rendering: optimizelegibility;
+    font-size: 24px;
+    line-height: 40px;
+    margin: 15px 0;
+}
+
+ul.toc{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    padding: 0;
+    margin: 0 0 10.5px 25px;
+}
+
+ul.prerequisites{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    padding: 0;
+    margin: 0 0 10.5px 25px;
+}
+
+ul.known_issues{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    padding: 0;
+    margin: 0 0 10.5px 25px;
+}
+
+ul.limitations{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    padding: 0;
+    margin: 0 0 10.5px 25px;
+}
+
+ul.changelog{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    padding: 0;
+    margin: 0 0 10.5px 25px;
+}
+
+table.metrics{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    line-height: 150%;
+    max-width: 100%;
+    display: inline-block;
+    background-color: transparent;
+    border-spacing: 0;
+    margin-bottom: 21px;
+    border: 1px solid rgb(0, 0, 0);
+    border-collapse: collapse;
+    border-radius: 4px;
+    width: auto;
+}
+table.metrics tr:nth-child(odd) {background-color:#c2c2c2;}
+table.metrics th{
+    border:solid rgb(0, 0, 0);
+    border-width:0 1px 1px 0;
+    padding:2px;
+}
+table.metrics td{
+    border:solid rgb(0, 0, 0);
+    border-width:0 1px 1px 0;
+    padding:2px;
+}
+
+.gray{
+    color: gray
+}
+
+table.api{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    line-height: 150%;
+    max-width: 100%;
+    display: inline-block;
+    background-color: transparent;
+    border-spacing: 0;
+    margin-bottom: 21px;
+    border: 1px solid rgb(0, 0, 0);
+    border-collapse: collapse;
+    border-radius: 4px;
+    width: auto;
+}
+table.api tr:nth-child(odd) {background-color:#c2c2c2;}
+table.api th{
+    border:solid rgb(0, 0, 0);
+    border-width:0 1px 1px 0;
+    padding:2px;
+}
+table.api td{
+    border:solid rgb(0, 0, 0);
+    border-width:0 1px 1px 0;
+    padding:2px;
+}
+
+table.chips{
+    font-family: "Muli","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #2d2d2d;
+    font-size: 15px;
+    line-height: 150%;
+    max-width: 100%;
+    display: inline-block;
+    background-color: transparent;
+    border-spacing: 0;
+    margin-bottom: 21px;
+    border: 1px solid rgb(0, 0, 0);
+    border-collapse: collapse;
+    border-radius: 4px;
+    width: auto;
+}
+table.chips tr:nth-child(odd) {background-color:#c2c2c2;}
+table.chips tr:nth-child(1) {
+    background-color:lightgreen;
+}
+
+table.chips th{
+    border:solid rgb(0, 0, 0);
+    border-width:0 1px 1px 0;
+    padding:2px;
+}
+table.chips td{
+    border:solid rgb(0, 0, 0);
+    border-width:0 1px 1px 0;
+    padding:2px;
+}

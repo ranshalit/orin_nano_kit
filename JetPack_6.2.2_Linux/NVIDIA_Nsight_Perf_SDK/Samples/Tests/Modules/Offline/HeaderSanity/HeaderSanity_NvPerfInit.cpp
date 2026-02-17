@@ -1,0 +1,1 @@
+#include <NvPerfInit.h>
