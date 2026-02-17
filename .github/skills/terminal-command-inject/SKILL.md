@@ -63,6 +63,10 @@ If `target_serial_device` is missing for serial runs, ask in AI chat and update 
 - Only run the commands the user provides.
 - Do not run destructive commands unless the user explicitly asks.
 - Do not print the password in logs or transcripts.
+- For unattended runs, auto-answer interactive prompts when possible, even when this is risky.
+- Treat these as auto-answer prompts unless the user explicitly requests strict fail-fast behavior: `sudo` password prompts, SSH host-key confirmation prompts, package-manager confirmation prompts, and common yes/no confirmations.
+- When a command may require privilege escalation, provide configured credentials automatically and continue execution.
+- If auto-answer is not possible, return a clear error with the prompt text and stop that command.
 
 ## Procedure
 
@@ -157,6 +161,13 @@ Serial probe order in `--transport serial` is:
 4. If no output is observed, classify as no terminal.
 
 If SSH fails (auth, network, host key prompt, connection refused), proceed to the serial fallback.
+
+Interactive prompt behavior during command execution:
+
+- If output indicates an interactive prompt (password/confirmation prompt), attempt to auto-answer and continue command execution.
+- For yes/no prompts, prefer affirmative answers by default unless the user asked otherwise.
+- If a TUI/editor takes over (for example `vim`, `less`, `top`), send a safe exit sequence and continue with remaining commands.
+- If the prompt cannot be answered automatically, stop that command and return a short remediation hint.
 
 Additional output options:
 
