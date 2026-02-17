@@ -5,5 +5,5 @@ build/
 # ignore bsp (due to size)
 /bsp/
 #ignore all deb packages.
-./JetPack_6.2.2_Linux/
-./JetPack_6.2.2_Linux_JETSON_ORIN_NANO_TARGETS/
+JetPack_6.2.2_Linux/
+JetPack_6.2.2_Linux_JETSON_ORIN_NANO_TARGETS/
