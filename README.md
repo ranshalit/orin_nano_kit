@@ -6,6 +6,11 @@
 ## previous installs and tests
 installed ultralytics, tested with GPU:
 
+source ~/yolo-venv/bin/activate
+>>> import ultralytics
+>>> import torch
+>>> ultralytics.cuda.is_available()
+
 yolo predict model=yolo11n.pt source=0 conf=0.25 save=True project=~/yolo-runs name=camera-test exist_ok=True show=True
 
 # skills
