@@ -5,6 +5,7 @@
 - Treat `JetPack_6.2.2_Linux/NVIDIA_Nsight_Perf_SDK` as vendor/sample content; avoid edits unless asked.
 - `Linux_for_Tegra/rootfs` is a full Ubuntu snapshot; avoid broad edits there.
 - `jetson-orin.txt` is very large decompiled DTS output; use targeted reads/search.
+- `ultralytics/` is a separate Git-managed repo (origin: `https://github.com/ultralytics/ultralytics.git`); treat as upstream/vendor and avoid edits unless explicitly requested.
 
 ## Big-picture architecture (how flashing is composed)
 - Flash flow is layered: `nvsdkmanager_flash.sh` (checks + UX wrapper) -> `nvautoflash.sh` (RCM board detect) -> `flash.sh` (core flashing/signing logic).
@@ -39,6 +40,22 @@
   - `target_ip`: `192.168.55.1`
   - `target_user`: `ubuntu`
   - `target_password`: `ubuntu`
+  - `target_ssh_private_key`: `~/.ssh/id_ed25519` (host path; create it if missing and copy public key to target)
   - `target_serial_device`: `/dev/ttyACM0`
   - `target_prompt_regex`: `(?:<username>@<username>:.*[$#]|[$#]) ?$`
 - Per top-level `README.md`, current device-side workflow often uses `.github/skills/terminal-command-inject` and `.github/skills/scp-file-copy`.
+
+## Device command routing (SSH MCP required)
+- **Important:** Device operations must use SSH MCP; use skills only as a fallback.
+- Requests that say "on device", "in device", or target `192.168.55.1` must run through SSH MCP tools, not local host shell.
+- Preferred route for remote execution:
+  1) `ssh_connect` using defaults (`host`, `port`, `username`, `privateKeyPath`) from `.vscode/ssh-mcp.profile.json`
+  2) `ssh_exec` for command execution
+  3) `ssh_disconnect` after command completion
+- For commands requiring privilege (for example `sudo ls /home/ -al`), execute remotely via `ssh_exec` and provide output from the remote command.
+- Host `bash` is only for host-side operations; never use it as a substitute for device-side command requests.
+
+## Tool availability preflight
+- Before running any device-side request, verify SSH MCP tools are available in the current tool list (`ssh_connect`, `ssh_exec`, `ssh_disconnect`).
+- If SSH MCP tools are unavailable, stop and clearly report: "SSH MCP tools are not available in this session; please enable the ssh-server MCP so I can run this on the device."
+- Do not silently fall back to host-local execution for device commands when SSH MCP is unavailable.

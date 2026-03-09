@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ssh-server": {
+      "command": "node",
+      "args": [
+        "/media/ranshal/4c73e1ab-4b56-472a-9270-98829a300cb8/jetson/nvidia/tools/ssh-mcp/build/index.js"
+      ],
+      "env": {
+        "NODE_NO_WARNINGS": "1"
+      }
+    }
+  }
+}
